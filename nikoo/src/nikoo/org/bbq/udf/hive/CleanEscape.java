@@ -4,7 +4,7 @@ import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.hadoop.io.Text;
 /**
  * Hive UDF to eliminate back slash from text
- * @author t_pauls
+ * @author Surajit Paul
  *@version 1.0
  */
 public class CleanEscape extends UDF {
