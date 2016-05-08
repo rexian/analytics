@@ -53,7 +53,7 @@ public class MaterialsAdapter extends TypeAdapter<Materials>  implements JsonSer
 		while(in.hasNext()){						
 			if(in.peek() == JsonToken.NAME){
 				String jsonTag = in.nextName();
-				if(JCR_PRIMARYTYPE.equals(jsonTag)){
+				if(PRIMARYTYPE.equals(jsonTag)){
 					materials.setJcrPrimaryType(in.nextString());
 				}
 				else if(JSON_KEY_N1.equalsIgnoreCase(jsonTag) || JSON_KEY_N2.equalsIgnoreCase(jsonTag) 
@@ -89,7 +89,7 @@ public class MaterialsAdapter extends TypeAdapter<Materials>  implements JsonSer
 			case MATERIALNAME: 
 				material.setMaterialName(jr.nextString());
 				break;
-			case JCR_LASTMODIFIEDBY: 
+			case LASTMODIFIEDBY: 
 				material.setJcrLastModifiedBy(jr.nextString());
 				break;
 			case MATERIALURL: 
@@ -98,13 +98,13 @@ public class MaterialsAdapter extends TypeAdapter<Materials>  implements JsonSer
 			case MATERIALTYPE: 
 				material.setMaterialType(jr.nextString());
 				break;
-			case SLING_RESOURCETYPE: 
+			case RESOURCETYPE: 
 				material.setSlingResourceType(jr.nextString());
 				break;		
-			case JCR_LASTMODIFIED: 
+			case LASTMODIFIED: 
 				material.setJcrLastModified(jr.nextString());
 				break;
-			case JCR_PRIMARYTYPE: 
+			case PRIMARYTYPE: 
 				material.setJcrPrimaryType(jr.nextString());
 				break;			
 			default:				
@@ -120,7 +120,7 @@ public class MaterialsAdapter extends TypeAdapter<Materials>  implements JsonSer
 	public void write(JsonWriter out, final Materials materials) throws IOException {
 		out.beginObject();
 		if(materials != null){
-			out.name(JCR_PRIMARYTYPE).value(materials.getJcrPrimaryType());
+			out.name(PRIMARYTYPE).value(materials.getJcrPrimaryType());
 			if(materials.getMaterial() != null){
 				out.name(MATERIAL);
 				writeMaterial(out, materials.getMaterial());
@@ -143,12 +143,12 @@ public class MaterialsAdapter extends TypeAdapter<Materials>  implements JsonSer
 		for(Material material: materials){
 			writer.beginObject();
 			writer.name(MATERIALNAME).value(material.getMaterialName());
-			writer.name(JCR_LASTMODIFIEDBY).value(material.getJcrLastModifiedBy());
+			writer.name(LASTMODIFIEDBY).value(material.getJcrLastModifiedBy());
 			writer.name(MATERIALURL).value(material.getMaterialUrl());
 			writer.name(MATERIALTYPE).value(material.getMaterialType());
-			writer.name(SLING_RESOURCETYPE).value(material.getSlingResourceType());
-			writer.name(JCR_LASTMODIFIED).value(material.getJcrLastModified());
-			writer.name(JCR_PRIMARYTYPE).value(material.getJcrPrimaryType());					
+			writer.name(RESOURCETYPE).value(material.getSlingResourceType());
+			writer.name(LASTMODIFIED).value(material.getJcrLastModified());
+			writer.name(PRIMARYTYPE).value(material.getJcrPrimaryType());					
 			writer.endObject();
 		}
 		writer.endArray();
@@ -158,7 +158,7 @@ public class MaterialsAdapter extends TypeAdapter<Materials>  implements JsonSer
 	public JsonElement serialize(Materials materials, Type type,
 			JsonSerializationContext ctx) {
 		JsonObject jo = new JsonObject();
-		jo.add(JCR_PRIMARYTYPE, new JsonPrimitive(materials.getJcrPrimaryType()));
+		jo.add(PRIMARYTYPE, new JsonPrimitive(materials.getJcrPrimaryType()));
 		List<Material> materialList = materials.getMaterial();
 		if(materialList != null && materialList.size() > 0){
 			for(Material material: materialList){
@@ -183,19 +183,19 @@ public class MaterialsAdapter extends TypeAdapter<Materials>  implements JsonSer
 		Materials materials = new Materials();
 		List<Material> materialList = new ArrayList<Material>();
 		Material material = new Material();
-		materials.setJcrPrimaryType(jo.get(JCR_PRIMARYTYPE).getAsString());
+		materials.setJcrPrimaryType(jo.get(PRIMARYTYPE).getAsString());
 		jsonArray = jo.get(MATERIAL).getAsJsonArray();
 		Iterator<JsonElement> arrayIterator = jsonArray.iterator();
 		while(arrayIterator.hasNext()){
 			JsonObject jsonObj = (JsonObject) arrayIterator.next();
 			material = new Material();
 			material.setMaterialName(jsonObj.get(MATERIALNAME).getAsString());
-			material.setJcrLastModifiedBy(jsonObj.get(JCR_LASTMODIFIEDBY).getAsString());
+			material.setJcrLastModifiedBy(jsonObj.get(LASTMODIFIEDBY).getAsString());
 			material.setMaterialUrl(jsonObj.get(MATERIALURL).getAsString());
 			material.setMaterialType(jsonObj.get(MATERIALTYPE).getAsString());
-			material.setSlingResourceType(jsonObj.get(SLING_RESOURCETYPE).getAsString());
-			material.setJcrLastModified(jsonObj.get(JCR_LASTMODIFIED).getAsString());
-			material.setJcrPrimaryType(jsonObj.get(JCR_PRIMARYTYPE).getAsString());			
+			material.setSlingResourceType(jsonObj.get(RESOURCETYPE).getAsString());
+			material.setJcrLastModified(jsonObj.get(LASTMODIFIED).getAsString());
+			material.setJcrPrimaryType(jsonObj.get(PRIMARYTYPE).getAsString());			
 			materialList.add(material);
 		}
 		materials.setMaterial(materialList);
